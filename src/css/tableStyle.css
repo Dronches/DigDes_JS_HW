@@ -1,0 +1,14 @@
+.tableElement table {
+border-collapse: collapse;
+text-align: center;
+overflow-x: scroll;
+}
+		
+.tableElement table th, 
+.tableElement table td {
+	border: 3px outset #A1A;
+	padding: 10px;
+	text-align: center;
+	vertical-align: middle;
+	word-break: break-word;
+}		 
