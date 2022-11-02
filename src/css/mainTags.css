@@ -1,0 +1,48 @@
+
+
+header, footer, section, nav {
+	padding: 1em;
+}
+header, footer {
+	background: #0CF;	
+	width: 100%;
+}
+
+header {
+  min-height: 5em;	
+  display: flex;  
+  flex-wrap: wrap;
+}	
+
+footer
+{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+section {
+	background: rgba(220,220, 180, 0.9);
+}
+
+nav, aside
+{
+	background: rgba(130,250,210, 0.9);
+}
+
+p {
+	margin-left: 1em; 
+	margin-right: 1em;
+	text-indent: 1.5em; 
+	font-size: 1.5em;
+	
+}
+
+h2 {
+	color: #3B5;
+	text-align: center;
+}
+
+img{
+	width: 300px; 
+	margin: 1em;
+}
