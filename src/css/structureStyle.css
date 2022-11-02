@@ -1,0 +1,141 @@
+.logo
+{
+	flex: 1;
+	margin: 5px;
+	display: flex;
+	align-items: center;
+}
+
+header .logo
+{
+	justify-content: flex-start;
+}
+
+.logo .logoText
+{
+	margin: 5px;
+	font: bold italic 130% sans-serif;
+}
+
+.logo img
+{
+	width: 4em;
+	max-width: 5em;
+}
+
+header .headerText
+{
+	float: right; 
+	text-align: center;
+	flex: 2;
+}
+
+.nameArticle {
+	font-weight: bold; 
+	font-family: sans-serif;
+	font-style: italic;
+	color: rgb(30%, 50%, 40%);		
+}
+
+
+.container
+{
+	display: block;
+	width: 90%;
+	margin: auto;
+}
+
+.introduction {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	min-height: 20vh;
+}
+
+.introduction section {
+	flex: 3;
+	width: 100%;
+}
+.introduction nav{
+	flex: 1;
+	width: 100%;
+}
+
+.main {
+}
+	
+.main section {
+}
+
+.additional {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+.additional article,
+.additional aside
+{
+	min-height: 20vh
+}	
+
+.additional article {
+	background: rgba(220,220, 220, 0.9);
+	flex: 3;
+}
+
+.additional aside {
+	flex: 1;
+	text-align: center;
+}
+
+.additional aside img
+{
+	width: 200px;
+}
+
+div .introduction, div .main, div .additional
+{
+	text-align: justify;
+}
+
+footer .contact
+{
+	flex:1;
+	vertical-align: center; 
+	text-align: left; 
+	float: left; 
+	margin-left: 5em;
+}
+
+footer .social
+{
+	flex:1;
+	vertical-align: center; 
+	text-align: left; 
+	float: left; 
+	margin-left: 5em;
+}
+
+footer .logo
+{
+	justify-content: flex-end;
+}
+
+.logo .logoImg
+{
+	margin: 5px;
+	flex:1;
+}
+
+footer.logoText
+{
+	margin: 1em;
+}
+
+.box
+{
+	display: flex;
+    flex-wrap: wrap;
+    align-content:flex-start;
+}
