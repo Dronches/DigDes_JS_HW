@@ -139,3 +139,23 @@ footer.logoText
     flex-wrap: wrap;
     align-content:flex-start;
 }
+
+#creatorInfoId
+{
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 1em;
+}
+
+.flexBtns
+{
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+
+}
+
+.infoList
+{
+	flex: 1;
+}
