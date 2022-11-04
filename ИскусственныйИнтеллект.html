@@ -18,19 +18,42 @@
 				background: url(src/img/backBody.jpg);
 				background-size: 100%;
 			}
+			
+			
+			
+			.content{
+				margin-left: 200px;
+			}
+			.block{
+				margin-bottom: 30px;
+			}
+			#sync, #async, #get-request, #post-request{
+				height: 30px;
+				width: 150px;
+				margin: 10px 50px 10px 0;
+			}
+			.response-info, .company-info{
+				padding: 5px;
+				width: 570px;
+				min-height: 200px;
+				border: 1px solid #ccc;
+			}
+			.text-italic{
+				text-decoration: underline;
+				font-style: italic;
+			}
+			
+			.param-request{
+				display: inline-block;
+				margin: 0 20px 20px 0;
+				padding: 10px;
+				border: 1px solid #ccc;
+			}
+			select{
+				height: 30px;
+			}
 
 		</style>
-		
-		<script src = "src/js/popup.js"></script>
-		<script>
-			// при загрузке окна
-			window.onload = function()
-			{
-				// скрываем всплывающее окно
-				CommentHide();
-			}
-		</script>
-		
 	</head>
 	<body>
 		<div id="popup-comment">
@@ -534,12 +557,21 @@
 
 				</article>
 				<aside id="creatorInfoId">
-					<h2>Создатель сайта</h2>  
-					<img src="src/img/avatar.jpg" alt="avatar">	
-					<br>
-					<h3>
-						<span style="color: #7700aa;">Dronches</span>
-					</h3>	
+					<h2>А вы знаете курс биткоина?)</h2>  
+					<p> Выберите валюту, в которой будет рассчитан курс биткоина: 
+					<select name=сurrency>
+					</select>
+					</p>
+					<div class="infoList">
+							<ul id = "CurrencyList">
+							</ul>
+							<p id = 'ErrorInfo' style = "color: red"></p>
+					</div>	
+					<div class = "flexBtns">
+						<button id="btnAsyncInfo" class = "buttonFunc" style = "background: #292">Обновить варианты</button>
+						<button id="btnAsyncElem" class = "buttonFunc">Обновить данные</button>
+						<button id="btnClear" class = "buttonFunc" style = "background: #922">Очистить</button>
+					</div>
 				</aside>
 			</div>
 			<footer class = "hrefList" >
@@ -596,6 +628,19 @@
 				</div>
 			</footer>
 		</div>
+		
+		<script src = "src/js/popup.js"></script>
+		<script src = "src/js/ajaxGet.js"></script>
+		<script>
+			window.onload = function()
+			{
+				// скрываем всплывающее окно
+				CommentHide();
+				// обновить варианты валюты
+				asyncRequestInfo();
+			}
+		</script>
+		
 	</body>
 </html>
 
