@@ -199,6 +199,8 @@ btnAsyncElem.addEventListener('click', asyncRequestElem); // ставим про
 // получаем текущий элемент из выпадающего списка - отлавливаем событие изменения
 selectCurrency.addEventListener('change', function (e) {
 	valueSelect = e.target.value
+	// выполняем обновление при смене
+	asyncRequestElem();
 	}
 )	
 
