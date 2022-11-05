@@ -39,12 +39,75 @@ function handlerStateChangeElem() {
 //Асинхронный вызов
 function asyncRequestElem(){
 	// Устанавливаем обработчик события изменения состояния запроса после выполнения
-	requestElem.onload = handlerStateChangeElem;								
-	requestElem.open("GET", "https://www.blockchain.com/ru/ticker", true);
+	//requestElem.onload = handlerStateChangeElem;								
+	//requestElem.open("GET", "https://www.blockchain.com/ru/ticker", true);
 	// очистить данные
 	clearInfo();
-	requestElem.send();	
+	//requestElem.send();
+
+	
+	// Устанавливаем обработчик события изменения состояния
+	requestElem.onload = handlerStateChangeElem;								
+	
+	// Формируем объект для запроса
+	var data = { 
+		valueSelect : {
+			"symbol": valueSelect
+		}
+	};
+	// Сериализуем объект - формируем тело POST запроса
+	var body = JSON.stringify(data);			
+	// Открываем запрос
+	requestElem.open("POST", "https://www.blockchain.com/ru/ticker");
+	// Устанавливаем заголовок для правильного принятия сервером данных в формате JSON
+	requestElem.setRequestHeader('Content-Type', 'application/json; charset=utf-8');				
+	requestElem.send(body);	
 }
+
+// Через GET-query
+/*
+//Асинхронный вызов
+function asyncRequestElem(){
+	// очистить данные
+	clearInfo();
+	// Устанавливаем обработчик события изменения состояния
+	requestElem.onload = handlerStateChangeElem;
+	//Получаем выбранный идентификатор из списка
+	var symbol = valueSelect;
+	//Формируем строку запроса
+	var queryParam = "?symbol=" + encodeURIComponent(valueSelect);
+	//Открываем запрос
+	requestElem.open("GET", "https://www.blockchain.com/ru/ticker" + queryParam);
+	requestElem.send();
+}
+*/
+
+// Через POST-query
+/*
+//Асинхронный вызов
+function asyncRequestElem(){
+	// очистить данные
+	clearInfo();
+	
+	// Устанавливаем обработчик события изменения состояния
+	requestElem.onload = handlerStateChangeElem;								
+	
+	// Формируем объект для запроса
+	var data = { 
+		valueSelect : {
+			"symbol": valueSelect
+		}
+	};
+	// Сериализуем объект - формируем тело POST запроса
+	var body = JSON.stringify(data);			
+	// Открываем запрос
+	requestElem.open("POST", "https://www.blockchain.com/ru/ticker");
+	// Устанавливаем заголовок для правильного принятия сервером данных в формате JSON
+	requestElem.setRequestHeader('Content-Type', 'application/json; charset=utf-8');				
+	requestElem.send(body);	
+}
+*/
+
 
 function generateList(value){
 	// записываем данные в массив

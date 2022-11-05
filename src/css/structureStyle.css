@@ -86,7 +86,6 @@ header .headerText
 
 .additional aside {
 	flex: 1;
-	text-align: center;
 }
 
 .additional aside img
@@ -152,10 +151,10 @@ footer.logoText
 	display: flex;
 	flex-direction: column;
 	margin: auto;
-
 }
 
 .infoList
 {
 	flex: 1;
+	font-size: 1.2em;
 }
