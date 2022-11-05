@@ -1,9 +1,7 @@
 // получаем кнопки
-btnAsyncInfo = document.getElementById("btnAsyncInfo");
 btnAsyncElem = document.getElementById("btnAsyncElem");
 btnAsyncElemColor = btnAsyncElem.style.background;
 disabledColor = 'grey'
-btnClear =document.getElementById("btnClear");
 // получаем информационные элементы
 var selectCurrency = document.getElementsByName("сurrency")[0]; // выпадающий список
 var currencyList = document.getElementById("CurrencyList"); // список результата
@@ -27,7 +25,7 @@ function handlerStateChangeElem() {
 			// получаем текущий элемент из выпадающего списка
 			var value = selectCurrency.value;
 			// если не удалось получить -> ошибка
-			if (data[value] == undefined)
+			if (!data[value])
 			{
 				errorInfo.innerHTML = "Ошибка. Не удалось получить данные...";
 				return;
@@ -40,20 +38,12 @@ function handlerStateChangeElem() {
 
 //Асинхронный вызов
 function asyncRequestElem(){
-	// Устанавливаем обработчик события изменения состояния запроса последовательно
-	requestElem.onload = null;		
-	requestElem.onreadystatechange = handlerStateChangeElem;						
+	// Устанавливаем обработчик события изменения состояния запроса после выполнения
+	requestElem.onload = handlerStateChangeElem;								
 	requestElem.open("GET", "https://www.blockchain.com/ru/ticker", true);
 	// очистить данные
 	clearInfo();
 	requestElem.send();	
-}
-
-// дополнение Alert
-function asyncRequestElemAlert()
-{
-	alert("Запрос выполняется...");
-	asyncRequestElem();
 }
 
 function generateList(value){
@@ -87,7 +77,7 @@ function handlerStateChangeInfo() {
 			// извлекаем данные
 			data = JSON.parse(requestInfo.responseText);	
 			// если не удалось получить -> ошибка
-			if (data == undefined || data.length == 0)
+			if (!data || data.length == 0)
 			{
 				// очистить данные
 				clearInfo();
@@ -109,20 +99,11 @@ function handlerStateChangeInfo() {
 
 // Асинхронный вызов данных - какие есть единицы измерения
 function asyncRequestInfo(){
-	// Устанавливаем обработчик события изменения состояния запроса последовательно
-	requestInfo.onload = null;		
-	requestInfo.onreadystatechange = handlerStateChangeInfo;						
+	// Устанавливаем обработчик события изменения состояния запроса после выполнения
+	requestInfo.onload = handlerStateChangeInfo;								
 	requestInfo.open("GET", "https://www.blockchain.com/ru/ticker", true);
 	requestInfo.send();	
 }
-
-// дополнение alert
-function asyncRequestInfoAlert()
-{
-	alert("Запрос выполняется...");
-	asyncRequestInfo();
-}
-
 
 function generateSelect(data){
 	selectCurrency.innerHTML = "";
@@ -139,7 +120,8 @@ function generateSelect(data){
 // выполняем действия запроса по времени
 // повторить с интервалом 1 час = 60 минут = 60*60секунд = 60*60*1000 мс
 let intervalElem = setInterval(() => asyncRequestElem(), 60*60*1000);
-let intervalInfo = setInterval(() => asyncRequestInfo(),  60*60*1000);
+// запрос на варианты каждую 1 минуту
+let intervalInfo = setInterval(() => asyncRequestInfo(),  60*1000);
 
 // переменная, сохраняющая значения состояний
 let isTimeEventElem = true;	
@@ -167,8 +149,6 @@ function setStateIntervalElem(isOn) {
 
 // вызываем функцию включения таймера
 setStateIntervalElem(true);
-
-
 
 // очистить данные
 function clearInfo(){
@@ -214,9 +194,7 @@ function setSavedValue()
 }
 
 // накладываем обработку событий
-btnAsyncInfo.addEventListener('click', asyncRequestInfoAlert); // ставим прослушку события на нажатие btnAsyncInfo
-btnAsyncElem.addEventListener('click', asyncRequestElemAlert); // ставим прослушку события на нажатие btnAsyncElem
-btnClear.addEventListener('click', clearInfo); // ставим прослушку события на нажатие btnClear		
+btnAsyncElem.addEventListener('click', asyncRequestElem); // ставим прослушку события на нажатие btnAsyncElem	
 
 // получаем текущий элемент из выпадающего списка - отлавливаем событие изменения
 selectCurrency.addEventListener('change', function (e) {
