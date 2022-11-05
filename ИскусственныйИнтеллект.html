@@ -538,9 +538,7 @@
 							<p id = 'ErrorInfo' style = "color: red"></p>
 					</div>	
 					<div class = "flexBtns">
-						<button id="btnAsyncInfo" class = "buttonFunc" style = "background: #292">Обновить варианты</button>
 						<button id="btnAsyncElem" class = "buttonFunc">Обновить данные</button>
-						<button id="btnClear" class = "buttonFunc" style = "background: #922">Очистить</button>
 					</div>
 				</aside>
 			</div>
@@ -608,6 +606,8 @@
 				CommentHide();
 				// обновить варианты валюты
 				asyncRequestInfo();
+				// обновить данные вылюты по умолчанию
+				asyncRequestElem();
 			}
 		</script>
 		
