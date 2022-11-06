@@ -574,15 +574,13 @@
 				this.handleChangeInfo = this.handleChangeInfo.bind(this);
 				// для полей, переводимых в int - привязываем событие
 				this.handleChangeInfoInt = this.handleChangeInfoInt.bind(this);
-				// для select
-				//this.handleChangeRatingValue = this.handleChangeRatingValue.bind(this);
-				this.handleSubmit = this.handleSubmit.bind(this);
-				
+				// для select - привязываем событие
 				this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
-				
+				// для checkbox  - привязываем событие
 				this.handleChangeFile= this.handleChangeFile.bind(this);
-				//this.handleChangeRatingValue = this.handleChangeRatingValue.bind(this);
-				//this.handleChangeNotEnoughValue = this.handleChangeNotEnoughValue.bind(this);
+				// при отправке данных  - привязываем событие				
+				this.handleSubmit = this.handleSubmit.bind(this);
+
 			}
 			
 			// обработка события изменения (на onChange) - для полей изначально string
