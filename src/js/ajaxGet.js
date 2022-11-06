@@ -46,43 +46,6 @@ function asyncRequestElem(){
 	requestElem.send();
 }
 
-// Через GET-query
-/*
-//Асинхронный вызов
-function asyncRequestElem(){
-	// очистить данные
-	clearInfo();
-	// Устанавливаем обработчик события изменения состояния
-	requestElem.onload = handlerStateChangeElem;
-	//Получаем выбранный идентификатор из списка
-	var symbol = valueSelect;
-	//Формируем строку запроса
-	var queryParam = "?symbol=" + encodeURIComponent(valueSelect);
-	//Открываем запрос
-	requestElem.open("GET", "https://www.blockchain.com/ru/ticker" + queryParam);
-	requestElem.send();
-}
-*/
-
-// Через POST-query
-/*
-//Асинхронный вызов
-function asyncRequestElem(){
-	// очистить данные
-	clearInfo();
-	// Устанавливаем обработчик события изменения состояния
-	requestElem.onload = handlerStateChangeElem;
-	//Получаем выбранный идентификатор из списка
-	var id = "EUR";
-	//Формируем строку запроса
-	var queryParam = "?symbol=" + encodeURIComponent(id);
-	//Открываем запрос
-	requestElem.open("GET", "https://www.blockchain.com/ru/ticker" + queryParam);
-	requestElem.send();
-}
-*/
-
-
 function generateList(value){
 	// записываем данные в массив
 	var info = ['Последняя стоимость: ' + value["last"] + " " + value["symbol"],
