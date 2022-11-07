@@ -538,274 +538,304 @@
 				asyncRequestElem();
 			}
 		</script>
+		
 		<script type="text/babel">
-				/* Пример реализации управляемого компонента */
-		class ManagedComponent extends React.Component {
-			constructor(props){
-				super(props);
-				
-				this.state = { 
-					// ФИО
-					secondName: "",
-					firstName: "",
-					thirdName: "",
-					// рейтинг
-					ratingValue: 0,
-					// что добавить
-					notEnoughValue: "", 
-					// варианты того, что понравилось
-					usageThemes: {
-						whatIsIntelligence: false,
-						whatIsAI: false,
-						classificationAI: false,
-						differencesBetweenAIAndProgram: false,
-						historyOfCreation: false,
-						directionOfStudyAI: false,
-						developmentProspectsAI: false,
-						authorTought: false
-					},
-					// комментарий
-					comment: '',
-					// информация о файле
-					fileInfo: ''
-				};
-				
-				// для полей изначально string - привязываем событие
-				this.handleChangeInfo = this.handleChangeInfo.bind(this);
-				// для полей, переводимых в int - привязываем событие
-				this.handleChangeInfoInt = this.handleChangeInfoInt.bind(this);
-				// для select - привязываем событие
-				this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
-				// для checkbox  - привязываем событие
-				this.handleChangeFile= this.handleChangeFile.bind(this);
-				// при отправке данных  - привязываем событие				
-				this.handleSubmit = this.handleSubmit.bind(this);
-
-			}
+			class ManagedComponent extends React.Component {
 			
-			// обработка события изменения (на onChange) - для полей изначально string
-			handleChangeInfo(event) {
-				const {name, value} = event.target
-				// вывод в консоль соответствия старого и нового значений
-				//console.log('старое значение: ' + this.state[name] + '  новое значение: ' + value);
-				// Записываем новое значение из event.target.value записываем в this.state.value
-				this.setState({
-					[name]: value
-				})
-			}
 			
-			// обработка события изменения (на onChange) - для полей изначально int			
-			handleChangeInfoInt(event) {
-				const {name, value} = event.target
-				// вывод в консоль соответствия старого и нового значений
-				//console.log('старое значение: ' + this.state[name] + '  новое значение: ' + value);
-				// Записываем новое значение из event.target.value записываем в this.state.value с переводом в int
-				this.setState({
-					[name]: Number(value)
-				})
-			}
-			
-			handleChangeCheckbox(event) {
-				const {name, checked} = event.target;
-				// Записываем новое значение из event.target.value записываем в this.state.usageThemes с использованием предыдущего состояния
-				this.setState(prevState => {
-					prevState.usageThemes[name] = checked;
-					return prevState;
-				});
-			}
-			
-			// обработка события изменения файла
-			handleChangeFile(event) {
-			// записываем объект файла в fileInfo
-			this.setState({
-				fileInfo : event.target.files[0]
-				})
-			}
-			
-			// событие - действие при отправки формы
-			handleSubmit(event){
-					// сохраняем данные
-					var info = 'Фамилия: ' + this.state.secondName + '\n' +
-					'Имя: ' + this.state.firstName + '\n' +
-					'Отчество: ' + this.state.thirdName + '\n' +
-					'Рейтинг: ' + String(this.state.ratingValue) + '\n' +
-					'Добавить на сайт: ' + this.state.notEnoughValue + '\n' +
-					'Понравившиеся разделы:\n' +
-					(this.state.usageThemes.whatIsIntelligence? '\tЧто такое интеллект\n' : '') +
-					(this.state.usageThemes.whatIsAI? '\tОпределение ИИ\n' : '') +
-					(this.state.usageThemes.classificationAI? '\tКлассификация ИИ\n' : '') +
-					(this.state.usageThemes.differencesBetweenAIAndProgram? '\tОтличие ИИ от программы\n' : '') +
-					(this.state.usageThemes.historyOfCreation? '\tИстория возникновения ИИ\n' : '') +
-					(this.state.usageThemes.directionOfStudyAI? '\tНаправления изучения ИИ\n' : '') +
-					(this.state.usageThemes.developmentProspectsAI? '\tПерспективы развития ИИ\n' : '') +
-					(this.state.usageThemes.authorTought? '\tМысли автора сайта\n' : '') +
-					'Комментарий: ' + this.state.comment + '\n';
+				constructor(props){
+					super(props);
 					
-					// проверка на существование файла, соответствие типу, реальному получению (наличию имени)
-					if (this.state.fileInfo && this.state.fileInfo instanceof File && this.state.fileInfo.name)
-					{
-						// добавляем информацию
-						info += 'Название файла: ' + this.state.fileInfo.name +'\nСодержимое файла:\n';
-						// создаем объект считывания
-						var reader = new FileReader();
-						// считывание данных с файла
-						reader.readAsText(this.state.fileInfo);
-						
-						// если успешное завершение
-						reader.onload = function() 
-						{ 
-							alert(info+reader.result); 
-						}; 
-						// при неудачном выполнении
-						reader.onerror = function() 
-						{
-							alert(info+reader.error); 
-						};
-					}
-					// выводим без информации файла
-					else
-						alert(info); 
-						
-					// здесь может быть добавлена реализация метода POST для отправки данных, однако не требуется по заданию	
-						
-					// предотвращение действий по умолчанию для события
-					event.preventDefault();
-			}
-			
-			
-			// вызываем render
-			render() {
-				return (
-					<form onSubmit={this.handleSubmit} ENCTYPE="multipart/form-data" >
-						<table class = "tablePopup">
-							<tr>
-								<td>
-									<b>Фамилия:</b>
-								</td>
-								<td> 
-									<input type='text' name='secondName' placeholder = "Введите фамилию..." 
-									value={this.state.secondName} onChange={this.handleChangeInfo}/>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<b>Имя:</b>
-								</td>
-								<td> 
-									<input type='text' name='firstName' placeholder = "Введите имя..." 
-									value={this.state.firstName} onChange={this.handleChangeInfo}/>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<b>Отчество:</b>
-								</td>
-								<td> 
-									<input type='text' name='thirdName' placeholder = "Введите отчество..." 
-									value={this.state.thirdName} onChange={this.handleChangeInfo}/>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<b>Оценка качества сайта:</b>
-								</td>
-								<td>	
-									<div class = "box">
-										<input type='radio' name='ratingValue' value='5'
-										checked={this.state.ratingValue === 5} 
-										onChange={this.handleChangeInfoInt}
-										/>&#10031;&#10031;&#10031;&#10031;&#10031;
-										<input type='radio' name='ratingValue' value='4'
-										checked={this.state.ratingValue === 4} 
-										onChange={this.handleChangeInfoInt}
-										/>&#10031;&#10031;&#10031;&#10031;
-										<input type='radio' name='ratingValue' value='3'
-										checked={this.state.ratingValue === 3} 
-										onChange={this.handleChangeInfoInt}
-										/>&#10031;&#10031;&#10031;
-										<input type='radio' name='ratingValue' value='2'
-										checked={this.state.ratingValue === 2} 
-										onChange={this.handleChangeInfoInt}
-										/>&#10031;&#10031;
-										<input type='radio' name='ratingValue' value='1'
-										checked={this.state.ratingValue === 1} 
-										onChange={this.handleChangeInfoInt}
-										/>&#10031;
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<b>Что стоит добавить на сайт:</b>
-								</td>
-								<td>
-									<select id = 'notEnough' name='notEnoughValue' value={this.state.notEnoughValue}  onChange={this.handleChangeInfo}>
-										<option value=''>выберите вариант</option>
-										<option value='перечисления'>перечисления</option>
-										<option value='ссылки'>ссылки</option>
-										<option value='картинки'>картинки</option>
-										<option value='схемы'>схемы</option>
-										<option value='таблицы'>таблицы</option>
-										<option value='объемную информацию'>объемную информацию</option>
-										<option value='другие разделы по теме'>другие разделы по теме</option>
-										<option value='информацию об авторе'>информацию об авторе</option>
-										<option value='другое'>другое</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<b>Какие темы вам были полезны:</b>
-								</td>
-								<td>
-									<div class = "box">
-											<label><input type='checkbox' name="whatIsIntelligence" checked={this.state.usageThemes.whatIsIntelligence}
-											onChange={this.handleChangeCheckbox}/>Что такое интеллект</label>
-											<label><input type='checkbox' name="whatIsAI" checked={this.state.usageThemes.whatIsAI}
-											onChange={this.handleChangeCheckbox}/>Определение ИИ</label>
-											<label><input type='checkbox' name="classificationAI" checked={this.state.usageThemes.classificationAI}
-											onChange={this.handleChangeCheckbox}/>Классификация ИИ</label>
-											<label><input type='checkbox' name="differencesBetweenAIAndProgram" checked={this.state.usageThemes.differencesBetweenAIAndProgram}
-											onChange={this.handleChangeCheckbox}/>Отличие ИИ от программы</label>
-											<label><input type='checkbox' name="historyOfCreation" checked={this.state.usageThemes.historyOfCreation}
-											onChange={this.handleChangeCheckbox}/>История возникновения ИИ</label>
-											<label><input type='checkbox' name="directionOfStudyAI" checked={this.state.usageThemes.directionOfStudyAI}
-											onChange={this.handleChangeCheckbox}/>Направления изучения ИИ</label>
-											<label><input type='checkbox' name="developmentProspectsAI" checked={this.state.usageThemes.developmentProspectsAI}
-											onChange={this.handleChangeCheckbox}/>Перспективы развития ИИ</label>
-											<label><input type='checkbox' name="authorTought" checked={this.state.usageThemes.authorTought}
-											onChange={this.handleChangeCheckbox}/>Мысли автора сайта</label>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<b>Комментарий:</b>
-								</td>
-								<td>
-									<textarea name='comment' cols='80' rows='5' wrap="hard" class="popup-textarea" 
-									placeholder="Оставьте ваши впечатления от сайта..."
-									value={this.state.comment} onChange={this.handleChangeInfo}></textarea>
-								</td>	
-							</tr>
-							<tr>
-								<td>
-									<label for="fileInfo">Дополнительный файл с комментариями</label>
-								</td>
-								<td>
-									<input type="file" id="fileInfo" name="fileInfo" onChange={this.handleChangeFile}/>
-								</td>
-							</tr>
-						</table>
-						<div class="divButtonFunc">
-							<input type='submit' class="buttonFunc" value="Отправить отзыв"/>
-						</div>
-					</form>
-				);
-			}
-		}			
+					this.state = { 
+						// ФИО
+						secondName: "",
+						firstName: "",
+						thirdName: "",
+						// рейтинг
+						ratingValue: 0, // храним значение
+						// что добавить
+						notEnoughValue: '', // храним значение (иначе, если поменяется массив, индекс будет недействителлен)
+						// варианты того, что понравилось
+						usageThemes: this.props.usageThemes,
+						// комментарий
+						comment: '',
+						// информация о файле
+						fileInfo: ''
+					};
+					
+					// для полей стандартных - привязываем событие
+					this.handleChangeInfo = this.handleChangeInfo.bind(this);
+					// для checkbox  - привязываем событие
+					this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
+					// для file  - привязываем событие
+					this.handleChangeFile= this.handleChangeFile.bind(this);
+					// при отправке данных  - привязываем событие				
+					this.handleSubmit = this.handleSubmit.bind(this);
+
+				}
 				
-		ReactDOM.render(<ManagedComponent />, document.getElementById("popupForm"));
+				// получить массив элементов radio по переданным данным
+				getListRatingValues(){
+					var listValues = [];
+					this.props.ratingValues.forEach(item => 
+						{
+						
+							listValues.push(<label><input type='radio' 
+								name = "ratingValue"
+								value={item}
+								onChange={this.handleChangeInfo}
+								/>{item}</label>)
+						}
+					);
+					return listValues;
+				}
+				// получить массив элементов option по переданным данным
+				getListNotEnoughValues(){
+					// записываем в значение state.notEnoughValue значение первого элемента, если можем:
+					if (this.state.notEnoughValue == '' && this.props.notEnoughValues.length > 0)
+						this.setState(
+							{
+								notEnoughValue : this.props.notEnoughValues[0]
+							}
+						)
+					var listValues = [];
+					this.props.notEnoughValues.forEach(item => 
+					{
+						listValues.push(<option value={item}>{item}</option>)
+					});
+					return listValues;
+				}
+				// Примечание: инициализации первого можем избежать, если добавить значение 'ничего', а соответствующая ей value будет равна ''
+				
+				// обработка события изменения (на onChange) - для полей изначально string
+				handleChangeInfo(event) {
+					const {name, value} = event.target
+					// вывод в консоль соответствия старого и нового значений
+					//console.log('старое значение: ' + this.state[name] + '  новое значение: ' + value);
+					// Записываем новое значение из event.target.value записываем в this.state.value
+					this.setState({
+						[name]: value
+					})
+				}
+				
+				handleChangeCheckbox(event) {
+					const {value, checked} = event.target;
+					// Записываем новое значение из event.target.value записываем в this.state.usageThemes с использованием предыдущего состояния
+					this.setState(prevState => {
+						prevState.usageThemes[value].checked = checked;
+						return prevState;
+					});
+				}
+				
+				// обработка события изменения файла
+				handleChangeFile(event) {
+				// записываем объект файла в fileInfo
+				this.setState({
+					fileInfo : event.target.files[0]
+					})
+				}
+				
+				// событие - действие при отправки формы
+				handleSubmit(event){
+						// сохраняем данные
+						var info = 'Фамилия: ' + this.state.secondName + '\n' +
+						'Имя: ' + this.state.firstName + '\n' +
+						'Отчество: ' + this.state.thirdName + '\n' +
+						'Рейтинг: ' + String(this.state.ratingValue) + '\n' +
+						'Добавить на сайт: ' + this.state.notEnoughValue + '\n' +
+						'Понравившиеся разделы:\n' +
+						this.state.usageThemes.map((item, index) => { 
+							 return this.state.usageThemes[index].checked? '\t' + this.state.usageThemes[index].title + '\n' : ''}).join('') +
+						'Комментарий: ' + this.state.comment + '\n';
+						
+						// проверка на существование файла, соответствие типу, реальному получению (наличию имени)
+						if (this.state.fileInfo && this.state.fileInfo instanceof File && this.state.fileInfo.name)
+						{
+							// добавляем информацию
+							info += 'Название файла: ' + this.state.fileInfo.name +'\nСодержимое файла:\n';
+							// создаем объект считывания
+							var reader = new FileReader();
+							// считывание данных с файла
+							reader.readAsText(this.state.fileInfo);
+							
+							// если успешное завершение
+							reader.onload = function() 
+							{ 
+								alert(info+reader.result); 
+							}; 
+							// при неудачном выполнении
+							reader.onerror = function() 
+							{
+								alert(info+reader.error); 
+							};
+						}
+						// выводим без информации файла
+						else
+							alert(info); 
+							
+						// здесь может быть добавлена реализация метода POST для отправки данных, однако не требуется по заданию	
+							
+						// предотвращение действий по умолчанию для события
+						event.preventDefault();
+				}
+				
+				
+				// вызываем render
+				render() {
+					// Записываем для radio элементы в коллекцию
+					const ratingValuesList = this.getListRatingValues();
+					
+					// Записываем для select элементы в коллекцию
+					const notEnoughValuesList = this.getListNotEnoughValues();
+					
+					// Записываем для checkBox элементы в коллекцию
+					const usageThemesList = this.state.usageThemes.map((item, index) => {
+						return <div><input type='checkbox' value={index}
+								onChange={this.handleChangeCheckbox}/>{item['title']}</div>
+
+					});
+				
+					return (
+						<form onSubmit={this.handleSubmit} ENCTYPE="multipart/form-data" >
+							<table class = "tablePopup">
+								<tr>
+									<td>
+										<b>Фамилия:</b>
+									</td>
+									<td> 
+										<input type='text' name='secondName' placeholder = "Введите фамилию..." 
+										value={this.state.secondName} onChange={this.handleChangeInfo}/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<b>Имя:</b>
+									</td>
+									<td> 
+										<input type='text' name='firstName' placeholder = "Введите имя..." 
+										value={this.state.firstName} onChange={this.handleChangeInfo}/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<b>Отчество:</b>
+									</td>
+									<td> 
+										<input type='text' name='thirdName' placeholder = "Введите отчество..." 
+										value={this.state.thirdName} onChange={this.handleChangeInfo}/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<b>Оценка качества сайта:</b>
+									</td>
+									<td>	
+										<div class = "box">
+											{ratingValuesList}
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<b>Что стоит добавить на сайт:</b>
+									</td>
+									<td>
+										<select id ='notEnoughValue' name='notEnoughValue' value={this.state.notEnoughValue}  onChange={this.handleChangeInfo}>
+											{notEnoughValuesList}
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<b>Какие темы вам были полезны:</b>
+									</td>
+									<td>
+										<div class = "box">
+											{usageThemesList}
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<b>Комментарий:</b>
+									</td>
+									<td>
+										<textarea name='comment' cols='80' rows='5' wrap="hard" class="popup-textarea" 
+										placeholder="Оставьте ваши впечатления от сайта..."
+										value={this.state.comment} onChange={this.handleChangeInfo}></textarea>
+									</td>	
+								</tr>
+								<tr>
+									<td>
+										<label for="fileInfo">Дополнительный файл с комментариями</label>
+									</td>
+									<td>
+										<input type="file" id="fileInfo" name="fileInfo" onChange={this.handleChangeFile}/>
+									</td>
+								</tr>
+							</table>
+							<div class="divButtonFunc">
+								<input type='submit' class="buttonFunc" value="Отправить отзыв"/>
+							</div>
+						</form>
+					);
+				}
+			}		
+
+			// варианты одиночного выбора - для radio
+			const ratingValues = [5, 4, 3, 2, 1];
+			// варанты опций - для select
+			const notEnoughValues = [
+				'перечисления',
+				'ссылки',
+				'картинки',
+				'схемы',
+				'таблицы',
+				'объемную информацию',
+				'другие разделы по теме',
+				'информацию об авторе',
+				'другое'
+			];	
+				
+			// варианты того, что понравилось
+			const usageThemes = [
+				{
+					title: 'Что такое интеллект',
+					checked: false,
+				},
+				{
+					title: 'Определение ИИ',
+					checked: false,
+				},
+				{
+					title: 'Классификация ИИ',
+					checked: false,
+				},
+				{
+					title: 'Отличие ИИ от программы',
+					checked: false,
+				},
+				{
+					title: 'История возникновения ИИ',
+					checked: false,
+				},
+				{
+					title: 'Направления изучения ИИ',
+					checked: false,
+				},
+				{
+					title: 'Перспективы развития ИИ',
+					checked: false,
+				},
+				{
+					title: 'Мысли автора сайта',
+					checked: false,
+				}
+			]
+						
+			// вызываем отрисовку компонента с передачей параметров		
+			ReactDOM.render(<ManagedComponent  ratingValues = {ratingValues} notEnoughValues={notEnoughValues} usageThemes={usageThemes}/>, 
+				document.getElementById("popupForm"));
 
 		</script>
 	</body>
